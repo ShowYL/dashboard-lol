@@ -37,7 +37,7 @@
     }
 
     let backgroundImage = $derived(
-        `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7) 20%, rgba(0, 0, 0, 1) 100%), url(${bannerUrl})`
+        `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3) 40%,rgba(0,0,0,0.7) 65%,rgba(0,0,0,0.9) 75%, rgba(0, 0, 0, 1) 100%), url(${bannerUrl})`
     );
 </script>
 
