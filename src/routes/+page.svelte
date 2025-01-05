@@ -1,8 +1,8 @@
 <script>
-	import { onMount } from 'svelte';
-	import { handwriting } from '$lib/components/handwritting.js';
+    import { onMount } from 'svelte';
+    import { handwriting } from '$lib/components/handwritting.js';
 
-	let { data } = $props();
+    let { data } = $props();
 
 	let bannerUrl = data.fetchedPantryData.banner;
 	let textDisplayed = $state(false);
@@ -12,11 +12,11 @@
 	let inputDiv = $state(null);
 	let showText = $state(false); // for transition purpose by entering the dom after the initialitation
 
-	$effect(() => {
-		if (researchClicked) {
-			input?.focus();
-		}
-	});
+    $effect(() => {
+        if (researchClicked) {
+            input?.focus();
+        }
+    });
 
 	onMount(() => {
 		window.addEventListener('keydown', handleKeydown);
@@ -24,12 +24,12 @@
 		showText = true; // Trigger the transition on mount
 	});
 
-	function handleKeydown(event) {
-		if (event.ctrlKey && event.key === 'k') {
-			event.preventDefault();
-			researchClicked = !researchClicked;
-		}
-	}
+    function handleKeydown(event) {
+        if (event.ctrlKey && event.key === 'k') {
+            event.preventDefault();
+            researchClicked = !researchClicked;
+        }
+    }
 
 	function handleClick(event) {
 		if (researchClicked && inputDiv && !inputDiv.contains(event.target)) {
