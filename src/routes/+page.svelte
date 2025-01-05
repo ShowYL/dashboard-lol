@@ -1,8 +1,8 @@
 <script>
-    import { onMount } from 'svelte';
-    import { handwriting } from '$lib/components/handwritting.js';
+	import { onMount } from 'svelte';
+	import { handwriting } from '$lib/components/handwritting.js';
 
-    let { data } = $props();
+	let { data } = $props();
 
 	let bannerUrl = data.fetchedPantryData.banner;
 	let textDisplayed = $state(false);
@@ -12,11 +12,11 @@
 	let inputDiv = $state(null);
 	let showText = $state(false); // for transition purpose by entering the dom after the initialitation
 
-    $effect(() => {
-        if (researchClicked) {
-            input?.focus();
-        }
-    });
+	$effect(() => {
+		if (researchClicked) {
+			input?.focus();
+		}
+	});
 
 	onMount(() => {
 		window.addEventListener('keydown', handleKeydown);
@@ -24,12 +24,12 @@
 		showText = true; // Trigger the transition on mount
 	});
 
-    function handleKeydown(event) {
-        if (event.ctrlKey && event.key === 'k') {
-            event.preventDefault();
-            researchClicked = !researchClicked;
-        }
-    }
+	function handleKeydown(event) {
+		if (event.ctrlKey && event.key === 'k') {
+			event.preventDefault();
+			researchClicked = !researchClicked;
+		}
+	}
 
 	function handleClick(event) {
 		if (researchClicked && inputDiv && !inputDiv.contains(event.target)) {
@@ -49,20 +49,28 @@
 	<div class="mx-auto mb-20 mt-auto flex h-1/5 w-2/5 items-center justify-center text-slate-400">
 		{#if !researchClicked}
 			<button
-				class="flex w-3/5 min-w-56 h-9 items-center rounded bg-slate-900 p-1 text-left opacity-70 shadow-2xl"
+				class="flex h-9 w-3/5 min-w-56 items-center rounded bg-slate-900 p-1 text-left opacity-70 shadow-2xl"
 				onclick={(event) => {
 					event.stopPropagation();
 					researchClicked = true;
 				}}
 			>
 				{#if showText}
-					<span in:handwriting|global={{ speed: 1.2 }} onintroend={() => (textDisplayed = true)}>
+					<span
+						in:handwriting|global={{ speed: 1.2 }}
+						onintroend={() => (textDisplayed = true)}
+					>
 						Hide on bush#GOAT
 					</span>
 				{/if}
 				{#if textDisplayed}
 					<span class="ml-auto">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+						>
 							<g
 								fill="none"
 								stroke="currentColor"
@@ -91,7 +99,11 @@
 										values="12;0"
 									/>
 								</path>
-								<path stroke-dasharray="8" stroke-dashoffset="8" d="M17 12l-4 4M17 12l-4 -4">
+								<path
+									stroke-dasharray="8"
+									stroke-dashoffset="8"
+									d="M17 12l-4 4M17 12l-4 -4"
+								>
 									<animate
 										fill="freeze"
 										attributeName="stroke-dashoffset"
@@ -108,7 +120,7 @@
 		{:else}
 			<div
 				bind:this={inputDiv}
-				class="flex w-3/5 min-w-56  h-9 rounded bg-slate-900 p-1 text-left opacity-70 shadow-2xl"
+				class="flex h-9 w-3/5 min-w-56 rounded bg-slate-900 p-1 text-left opacity-70 shadow-2xl"
 			>
 				<input
 					bind:this={input}
@@ -119,7 +131,11 @@
 				<button
 					class="flex w-1/6 items-center justify-end rounded"
 					aria-label="button to search player"
-					><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+					><svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
 						><g
 							fill="none"
 							stroke="currentColor"
