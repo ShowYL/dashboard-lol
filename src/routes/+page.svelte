@@ -49,7 +49,7 @@
 	<div class="mx-auto mb-20 mt-auto flex h-1/5 w-2/5 items-center justify-center text-slate-400">
 		{#if !researchClicked}
 			<button
-				class="flex w-3/5 min-w-56 items-center rounded bg-slate-900 p-1 text-left opacity-70 shadow-2xl"
+				class="flex w-3/5 min-w-56 h-9 items-center rounded bg-slate-900 p-1 text-left opacity-70 shadow-2xl"
 				onclick={(event) => {
 					event.stopPropagation();
 					researchClicked = true;
@@ -108,7 +108,7 @@
 		{:else}
 			<div
 				bind:this={inputDiv}
-				class="flex w-3/5 min-w-56 rounded bg-slate-900 p-1 text-left opacity-70 shadow-2xl"
+				class="flex w-3/5 min-w-56  h-9 rounded bg-slate-900 p-1 text-left opacity-70 shadow-2xl"
 			>
 				<input
 					bind:this={input}
