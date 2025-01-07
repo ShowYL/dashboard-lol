@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { handwriting } from '$lib/components/handwritting.js';
 
 	let { data } = $props();
@@ -11,12 +12,60 @@
 	let inputValue = $state('');
 	let inputDiv = $state(null);
 	let showText = $state(false); // for transition purpose by entering the dom after the initialitation
+	let gameName = $state('');
+	let tag = $state('');
+	let erreur = $state('');
 
 	$effect(() => {
-		if (researchClicked) {
-			input?.focus();
-		}
+		researchClicked ? input?.focus() : (erreur = '');
 	});
+
+	async function checkValidInput() {
+		if (inputValue === '') {
+			erreur = 'Please fill in the field';
+			return;
+		}
+
+		if (!inputValue.includes('#')) {
+			erreur = "Le tag n'est pas renseigné";
+			return;
+		}
+
+		gameName = inputValue.split('#')[0];
+		tag = inputValue.split('#')[1];
+
+		if (!/^[a-zA-Z0-9 ]{3,16}$/.test(gameName)) {
+			erreur = 'le nom est incorrect';
+			return;
+		}
+
+		if (!/^[a-zA-Z0-9]{3,5}$/.test(tag)) {
+			erreur = 'le tag est incorrect';
+			return;
+		}
+
+		const res = await checkSummoners(gameName, tag);
+
+		if (!res) {
+			erreur = "Le joueur n'existe pas";
+			return;
+		}
+
+		// Redirect to another page with parameters
+		goto(`/player?gameName=${gameName}&tag=${tag}`);
+	}
+
+	async function checkSummoners(name, letag) {
+		try {
+			const res = await fetch(`/api/getSummoner?riotID=${name}&tag=${letag}`);
+			if (!res.ok) {
+				return null;
+			}
+			return await res.json();
+		} catch (err) {
+			return null;
+		}
+	}
 
 	onMount(() => {
 		window.addEventListener('keydown', handleKeydown);
@@ -28,6 +77,10 @@
 		if (event.ctrlKey && event.key === 'k') {
 			event.preventDefault();
 			researchClicked = !researchClicked;
+		}
+
+		if (event.key === 'Enter' && researchClicked) {
+			checkValidInput();
 		}
 	}
 
@@ -118,36 +171,40 @@
 				{/if}
 			</button>
 		{:else}
-			<div
-				bind:this={inputDiv}
-				class="flex h-9 w-3/5 min-w-56 rounded bg-slate-900 p-1 text-left opacity-70 shadow-2xl"
-			>
-				<input
-					bind:this={input}
-					bind:value={inputValue}
-					class="w-5/6 rounded bg-slate-900 p-1 focus:border-none focus:outline-none"
-					placeholder="riotID + #TAG"
-				/>
-				<button
-					class="flex w-1/6 items-center justify-end rounded"
-					aria-label="button to search player"
-					><svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						><g
-							fill="none"
-							stroke="currentColor"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							><path
-								d="M3 12c0 4.97 4.03 9 9 9c4.97 0 9 -4.03 9 -9c0 -4.97 -4.03 -9 -9 -9c-4.97 0 -9 4.03 -9 9Z"
-							/><path d="M7 12h9.5" /><path d="M17 12l-4 4M17 12l-4 -4" /></g
-						></svg
-					></button
+			<div class="h-9 w-3/5 min-w-56">
+				<div
+					bind:this={inputDiv}
+					class="flex rounded bg-slate-900 p-1 text-left opacity-70 shadow-2xl"
 				>
+					<input
+						bind:this={input}
+						bind:value={inputValue}
+						class="w-5/6 rounded bg-slate-900 p-1 focus:border-none focus:outline-none"
+						placeholder="game name + #TAG"
+					/>
+					<button
+						class="flex w-1/6 items-center justify-end rounded"
+						aria-label="button to search player"
+						onclick={checkValidInput}
+						><svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							><g
+								fill="none"
+								stroke="currentColor"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								><path
+									d="M3 12c0 4.97 4.03 9 9 9c4.97 0 9 -4.03 9 -9c0 -4.97 -4.03 -9 -9 -9c-4.97 0 -9 4.03 -9 9Z"
+								/><path d="M7 12h9.5" /><path d="M17 12l-4 4M17 12l-4 -4" /></g
+							></svg
+						></button
+					>
+				</div>
+				<div><p>{erreur}</p></div>
 			</div>
 		{/if}
 	</div>

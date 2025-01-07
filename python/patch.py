@@ -156,13 +156,13 @@ def getSkins(soup) -> Tuple[bool,Tuple]:
     return [False]
 
 def getWeb() -> BeautifulSoup:
-    url = f"https://www.leagueoflegends.com/fr-fr/news/game-updates/patch-{getPatch()}-notes/"
+    url = f"https://www.leagueoflegends.com/en-gb/news/game-updates/patch-{getPatch()}-notes/"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     return soup
 
 def getUrl():
-    return f"https://www.leagueoflegends.com/fr-fr/news/game-updates/patch-{getPatch()}-notes/"
+    return f"https://www.leagueoflegends.com/en-gb/news/game-updates/patch-{getPatch()}-notes/"
 
 def main():
     print("running patch.py")

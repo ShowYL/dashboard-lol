@@ -1,6 +1,6 @@
-import { fetchData } from '$lib/pantry.js';
+import { fetchDataPantry } from '$lib/pantry.js';
 
 export const load = async () => {
-	const fetchedPantryData = await fetchData();
+	const fetchedPantryData = await fetchDataPantry();
 	return { fetchedPantryData };
 };

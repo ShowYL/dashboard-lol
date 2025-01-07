@@ -158,4 +158,4 @@ def upload(sources: List[str]):
     print("Done")
 
 if __name__=="__main__" or __name__ == "upload_pantry":
-    upload([f"Data/{getPatch()}/data/fr_FR/champion"])
+    upload([f"Data/{getPatch()}/data/en_GB/champion"])
