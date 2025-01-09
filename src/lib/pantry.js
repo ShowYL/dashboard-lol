@@ -9,3 +9,15 @@ export async function fetchDataPantry() {
 	}
 	return response.json();
 }
+
+
+export async function fetchPantryPatch() {
+	const response = await fetch(
+		`https://getpantry.cloud/apiv1/pantry/${PANTRY_API_KEY}/basket/Changes`
+	);
+	if (!response.ok) {
+		throw new Error('Error while fetching pantry');
+	}
+    const data = await response.json();
+    return data.patch;
+}

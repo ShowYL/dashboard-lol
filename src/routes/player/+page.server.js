@@ -46,6 +46,8 @@ export const load = async ({ url }) => {
 		'pushPings',
 		'riotIdGameName',
 		'riotIdTagline',
+		'summonerId',
+		'summonerLevel',
 		'timePlayed',
 		'totalDamageDealtToChampions',
 		'totalDamageShieldedOnTeammates',

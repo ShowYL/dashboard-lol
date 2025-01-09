@@ -17,7 +17,12 @@
 	let erreur = $state('');
 
 	$effect(() => {
-		researchClicked ? input?.focus() : (erreur = '');
+		if (researchClicked){
+			input?.focus()
+			input?.select()
+		}else{
+			erreur = ''
+		}
 	});
 
 	async function checkValidInput() {
@@ -39,7 +44,7 @@
 			return;
 		}
 
-		if (!/^[a-zA-Z0-9]{3,5}$/.test(tag)) {
+		if (!/^[a-zA-Z0-9 ]{3,5}$/.test(tag)) {
 			erreur = 'le tag est incorrect';
 			return;
 		}
@@ -96,10 +101,10 @@
 </script>
 
 <div
-	class="flex h-full w-full items-center justify-center bg-cover bg-center bg-no-repeat"
+	class="flex h-full w-full items-center justify-center bg-cover bg-center bg-no-repeat flex-col"
 	style="background-image: {backgroundImage};"
 >
-	<div class="mx-auto mb-20 mt-auto flex h-1/5 w-2/5 items-center justify-center text-slate-400">
+	<div class="mx-auto mb-16 mt-auto flex h-1/5 w-2/5 items-center justify-center text-slate-400">
 		{#if !researchClicked}
 			<button
 				class="flex h-9 w-3/5 min-w-56 items-center rounded bg-slate-900 p-1 text-left opacity-70 shadow-2xl"
@@ -207,5 +212,8 @@
 				<div><p>{erreur}</p></div>
 			</div>
 		{/if}
+	</div>
+	<div class="text-slate-700 text-xs">
+		<p>Dashboard LoL is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games and all associated properties are trademarks or registered trademarks of Riot Games, Inc</p>
 	</div>
 </div>

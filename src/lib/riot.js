@@ -38,3 +38,12 @@ export async function fetchMatches(puuid) {
 
 	return tabmatches;
 }
+
+export async function fetchRank(summonerId) {
+	const response = await fetch(`https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerId}?api_key=${RIOT_API_KEY}`)
+	if (!response.ok) {
+		throw new Error(`error while fetching rank for ${summonerId}`)
+	}
+	const data = await response.json()
+	return data
+}
