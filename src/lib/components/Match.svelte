@@ -6,6 +6,7 @@
 
 	let win = $state('');
 	let champion = $state('');
+	$inspect(champion)
 	let urlSplash = $state('');
 
     function cardBackground(urlSplash,win){

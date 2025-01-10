@@ -1,7 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
+	import { menuVisible } from './shared.js';
+	import MenuMatches from './MenuMatches.svelte';
 
-	let { match, summonerName, tag } = $props();
+	let { matches, summonerName, tag } = $props();
 
 	let patchData = $state('');
 
@@ -14,7 +16,13 @@
 	let soloRank = $state('');
 	let flexRank = $state('');
 
-	$inspect(soloRank)
+	let innerWidth = $state(0)
+
+	$inspect(menuVisible)
+
+	$effect(() => {
+		if (innerWidth >= 768) $menuVisible = false
+	})
 
 	const borderRank = {
 		UNRANKED: 0,
@@ -45,7 +53,12 @@
 					];
 				}
 			});
-			if (soloRank === '') soloRank = ['UNRANKED',null,`https://lolg-cdn.porofessor.gg/img/s/league-icons-v3/160/${borderRank['UNRANKED']}.png?v=9`]
+			if (soloRank === '')
+				soloRank = [
+					'UNRANKED',
+					null,
+					`https://lolg-cdn.porofessor.gg/img/s/league-icons-v3/160/${borderRank['UNRANKED']}.png?v=9`
+				];
 			rankData.forEach((data) => {
 				if (data.queueType === 'RANKED_FLEX_SR') {
 					const borderRankUrl = `https://lolg-cdn.porofessor.gg/img/s/league-icons-v3/160/${borderRank[data.tier]}.png?v=9`;
@@ -59,8 +72,13 @@
 					];
 				}
 			});
-			if (flexRank === '') flexRank = ['UNRANKED',null,`https://lolg-cdn.porofessor.gg/img/s/league-icons-v3/160/${borderRank['UNRANKED']}.png?v=9`]
-			rankData = ''
+			if (flexRank === '')
+				flexRank = [
+					'UNRANKED',
+					null,
+					`https://lolg-cdn.porofessor.gg/img/s/league-icons-v3/160/${borderRank['UNRANKED']}.png?v=9`
+				];
+			rankData = '';
 		}
 	});
 
@@ -78,7 +96,7 @@
 	}
 
 	onMount(async () => {
-		match.info.participants.forEach((player) => {
+		matches[0].info.participants.forEach((player) => {
 			if (player.riotIdGameName === summonerName && player.riotIdTagline === tag) {
 				playerField = player;
 			}
@@ -95,25 +113,29 @@
 	});
 </script>
 
+<svelte:window bind:innerWidth />
+
 {#snippet rank(data)}
 	<div class="flex h-full w-1/2 items-center">
-		<div class="h-full w-1/2 flex items-center flex-col text-base mb-4">
+		<div class="mb-4 flex h-full w-1/2 flex-col items-center text-base">
 			<img src={data[5]} alt="{data[0]} rank" class="h-3/4" />
 			<p>{data[0]}</p>
 			<p>{data[2]} LP</p>
 		</div>
-		<div class="h-full w-1/2 flex flex-col items-center justify-center text-base lg:-ml-16 xl:-ml-20">
-			<p>{data[3]+data[4]} games</p>
+		<div
+			class="flex h-full w-1/2 flex-col items-center justify-center text-base lg:-ml-16 xl:-ml-20"
+		>
+			<p>{data[3] + data[4]} games</p>
 			<p class="text-blue-400">{data[3]} win</p>
 			<p class="text-red-400">{data[4]} losses</p>
-			<p>{Math.round((data[3]/(data[3]+data[4]))*1000)/10}%</p>
+			<p>{Math.round((data[3] / (data[3] + data[4])) * 1000) / 10}%</p>
 		</div>
 	</div>
 {/snippet}
 
 {#snippet unrank(data)}
 	<div class="flex h-full w-1/2 items-center">
-		<div class="h-full w-1/2 flex items-center flex-col text-base mb-4">
+		<div class="mb-4 flex h-full w-full flex-col items-center text-base">
 			<img src={data[2]} alt="{data[0]} rank" class="h-3/4" />
 			<p>{data[0]}</p>
 		</div>
@@ -121,14 +143,40 @@
 {/snippet}
 
 <div class="flex h-full w-full flex-col items-center bg-slate-900 text-xl text-white md:flex-row">
-	<div class="flex h-full w-full items-center justify-center md:w-1/3">
-		<h1 class="ml-8 flex items-center space-x-4">
-			<img src={icon} alt="icon of the summoner" class="h-24 w-24 rounded-2xl" />
-			<ul>
-				<li><p>{summonerName}#{tag}</p></li>
-				<li>Level {summonerLevel}</li>
-			</ul>
-		</h1>
+	<div class="mt-4 flex h-full w-full flex-row items-center justify-center md:w-1/3">
+		<div class="flex h-full w-3/4 items-center justify-center md:mt-0 md:w-full">
+			<h1 class="ml-8 flex items-center space-x-4">
+				<img src={icon} alt="icon of the summoner" class="h-24 w-24 rounded-2xl" />
+				<ul>
+					<li><p>{summonerName}#{tag}</p></li>
+					<li>Level {summonerLevel}</li>
+				</ul>
+			</h1>
+		</div>
+		<button
+			aria-label="menubar for matches"
+			class="flex h-full w-1/4 items-center justify-center md:hidden"
+			onclick={(event) => {$menuVisible = true; event.stopPropagation()}}
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
+				><g
+					fill="none"
+					stroke="currentColor"
+					stroke-dasharray="8"
+					stroke-dashoffset="8"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					><path d="M12 5h6M12 5h-6" stroke-dashoffset="0" /><path
+						d="M12 10h6M12 10h-6"
+						stroke-dashoffset="0"
+					/><path d="M12 15h6M12 15h-6" stroke-dashoffset="0" /><path
+						d="M12 20h6M12 20h-6"
+						stroke-dashoffset="0"
+					/></g
+				></svg
+			>
+		</button>
 	</div>
 	<div class="flex h-full w-full items-center md:w-2/3">
 		{#if soloRank !== '' && soloRank[1] !== null}
@@ -143,3 +191,7 @@
 		{/if}
 	</div>
 </div>
+
+{#if innerWidth<=768}
+	<MenuMatches {matches} onMenu={true}/>
+{/if}
