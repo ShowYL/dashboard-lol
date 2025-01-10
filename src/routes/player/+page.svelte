@@ -15,9 +15,9 @@
         <HeaderPlayer matches={matches} summonerName={summonerName} tag={tag} />
     </div>
     <div class="flex h-2/3 w-full md:h-5/6">
-        <div class="h-full w-full md:w-3/4"></div>
+        <div class="h-full w-full md:w-3/4 bg-slate-900"></div>
         <div class="hidden md:block md:h-full md:w-1/4 overflow-hidden scroll-smooth hover:overflow-y-auto bg-slate-900">
-            <MenuMatches matches={matches}/>
+            <MenuMatches matches={matches} {summonerName} {tag}/>
         </div>
     </div>
 </div>

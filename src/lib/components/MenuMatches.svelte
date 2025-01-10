@@ -2,7 +2,7 @@
     import Match from "./Match.svelte";
     import { menuVisible } from './shared.js';
 
-    let { matches, onMenu = false } = $props();
+    let { summonerName, tag, matches, onMenu = false } = $props();
 
     let menu = $state(null);
 
@@ -27,11 +27,11 @@
         class={`fixed right-0 top-0 h-full overflow-auto w-3/5 transform bg-slate-900 text-white transition-transform duration-300 ${$menuVisible ? 'translate-x-0' : 'translate-x-full'}`}
     >
         {#each matches as match}
-            <Match {match} />
+            <Match {match} {summonerName} {tag}/>
         {/each}
     </div>
 {:else}
     {#each matches as match}
-        <Match {match} />
+        <Match {match} {summonerName} {tag}/>
     {/each}
 {/if}

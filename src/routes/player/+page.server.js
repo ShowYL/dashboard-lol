@@ -55,6 +55,7 @@ export const load = async ({ url }) => {
 		'totalHeal',
 		'totalHealsOnTeammates',
 		'totalMinionsKilled',
+		'neutralMinionsKilled',
 		'totalTimeCCDealt',
 		'totalTimeSpentDead',
 		'trueDamageDealtToChampions',
@@ -66,7 +67,7 @@ export const load = async ({ url }) => {
 		'win'
 	];
 
-	const keepOthes = [
+	const keepOthers = [
 		'item0',
 		'item1',
 		'item2',
@@ -75,6 +76,10 @@ export const load = async ({ url }) => {
 		'item5',
 		'item6',
 		'kills',
+		'assists',
+		'deaths',
+		'riotIdGameName',
+		'riotIdTagline',
 		'lane',
 		'champLevel',
 		'championId',
@@ -99,7 +104,7 @@ export const load = async ({ url }) => {
 				// if not the researched player
 				Object.keys(player).forEach((property) => {
 					// for each property
-					if (!keepOthes.includes(property)) delete player[property]; // remove the property if not in keep
+					if (!keepOthers.includes(property)) delete player[property]; // remove the property if not in keep
 				});
 			}
 		});

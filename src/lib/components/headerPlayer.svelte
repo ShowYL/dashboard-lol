@@ -18,8 +18,6 @@
 
 	let innerWidth = $state(0)
 
-	$inspect(menuVisible)
-
 	$effect(() => {
 		if (innerWidth >= 768) $menuVisible = false
 	})
@@ -108,7 +106,7 @@
 
 		rankData = await getRank(summonerID);
 
-		icon = `https://ddragon.leagueoflegends.com/cdn/${patchData}/img/profileicon/${playerField.profileIcon}.png`;
+		icon = `https://ddragon.leagueoflegends.com/cdn/15.${patchData.split('.').pop()}.1/img/profileicon/${playerField.profileIcon}.png`;
 		summonerLevel = playerField.summonerLevel;
 	});
 </script>
@@ -193,5 +191,5 @@
 </div>
 
 {#if innerWidth<=768}
-	<MenuMatches {matches} onMenu={true}/>
+	<MenuMatches {summonerName} {tag} {matches} onMenu={true}/>
 {/if}
