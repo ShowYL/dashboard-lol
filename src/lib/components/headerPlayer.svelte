@@ -176,7 +176,7 @@
 			>
 		</button>
 	</div>
-	<div class="flex h-full w-full items-center md:w-2/3">
+	<div class="flex h-full w-5/6 items-center md:w-2/3">
 		{#if soloRank !== '' && soloRank[1] !== null}
 			{@render rank(soloRank)}
 		{:else}

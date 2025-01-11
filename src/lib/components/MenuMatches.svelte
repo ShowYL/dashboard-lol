@@ -15,7 +15,7 @@
     });
 
     function handleClick(event) {
-        if (!menu.contains(event.target)) {
+        if (menu && !menu.contains(event.target)) {
             $menuVisible = false;
         }
     }
