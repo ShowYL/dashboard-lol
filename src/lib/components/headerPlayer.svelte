@@ -121,12 +121,12 @@
 			<p>{data[2]} LP</p>
 		</div>
 		<div
-			class="flex h-full w-1/2 flex-col items-center justify-center text-base lg:-ml-16 xl:-ml-20"
+			class="flex h-full w-1/2 flex-col items-center justify-center text-base lg:-ml-16 xl:-ml-20 overflow-visible whitespace-nowrap"
 		>
-			<p>{data[3] + data[4]} games</p>
-			<p class="text-blue-400">{data[3]} win</p>
-			<p class="text-red-400">{data[4]} losses</p>
-			<p>{Math.round((data[3] / (data[3] + data[4])) * 1000) / 10}%</p>
+			<p class="inline-block">{data[3] + data[4]} games</p>
+			<p class="inline-block text-blue-400">{data[3]} win</p>
+			<p class="inline-block text-red-400">{data[4]} losses</p>
+			<p class="inline-block">{Math.round((data[3] / (data[3] + data[4])) * 1000) / 10}%</p>
 		</div>
 	</div>
 {/snippet}
