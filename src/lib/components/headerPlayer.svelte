@@ -114,7 +114,7 @@
 <svelte:window bind:innerWidth />
 
 {#snippet rank(data)}
-	<div class="flex h-full w-1/2 items-center">
+	<div class="flex flex-col md:flex-row h-full w-1/2 items-center">
 		<div class="mb-4 flex h-full w-1/2 flex-col items-center text-base">
 			<img src={data[5]} alt="{data[0]} rank" class="h-3/4" />
 			<p>{data[0]}</p>
