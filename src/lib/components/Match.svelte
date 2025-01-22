@@ -40,7 +40,7 @@
 
 <div class="flex flex-row w-full h-1/5 items-center justify-center">
 	<div
-		class="bg-cover h-5/6 rounded-3xl w-3/5 ml-4 {splashPosition[champion]
+		class="bg-cover h-5/6 rounded-2xl w-3/5 ml-4 {splashPosition[champion]
 			? splashPosition[champion]
 			: 'bg-center'} h-1/5 bg-no-repeat"
 		style="background-image : {cardBackground(urlSplash, win)}"

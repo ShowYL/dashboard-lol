@@ -29,3 +29,6 @@ vite.config.ts.timestamp-*
 # data from riot
 Data/
 archive riot/
+
+#Others
+remove_fnfunc.sh
