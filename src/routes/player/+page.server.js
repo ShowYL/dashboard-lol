@@ -43,6 +43,7 @@ export const load = async ({ url }) => {
 		'physicalDamageDealtToChampions',
 		'physicalDamageTaken',
 		'profileIcon',
+		'puuid',
 		'pushPings',
 		'riotIdGameName',
 		'riotIdTagline',

@@ -1,18 +1,20 @@
 <script>
 	import { onMount } from 'svelte';
 	import splashPosition from './SplashPosition.js';
+	import { statsDisplay,menuVisible } from './shared.js';
 
 	let { match, summonerName, tag } = $props();
 
 	let win = $state('');
 	let champion = $state('');
 	let urlSplash = $state('');
-	let kills = $state('')
-	let assists = $state('')
-	let deaths = $state('')
-	let cs =$state('')
-	let gameDuration = match.info.gameDuration
-	let csMIN = $derived(((Math.round(cs / (gameDuration / 600)))/10).toString().replace('.',','))
+	let kills = $state('');
+	let assists = $state('');
+	let deaths = $state('');
+	let cs = $state('');
+	let id = $state('overview');
+	let gameDuration = match.info.gameDuration;
+	let csMIN = $derived((Math.round(cs / (gameDuration / 600)) / 10).toString().replace('.', ','));
 
 	function cardBackground(urlSplash, win) {
 		if (win) {
@@ -27,25 +29,25 @@
 			if (player.riotIdGameName === summonerName && player.riotIdTagline === tag) {
 				win = player.win;
 				champion = player.championName;
-				kills = player.kills
-				assists = player.assists
-				deaths = player.deaths
-				cs = player.totalMinionsKilled + player.neutralMinionsKilled
+				kills = player.kills;
+				assists = player.assists;
+				deaths = player.deaths;
+				cs = player.totalMinionsKilled + player.neutralMinionsKilled;
 			}
 		});
-
+		id = match.metadata.matchId;
 		urlSplash = `https://ddragon.leagueoflegends.com/cdn/img/champion/centered/${champion}_0.jpg`;
 	});
 </script>
 
-<div class="flex flex-row w-full h-1/5 items-center justify-center">
+<div class="flex h-1/5 w-full flex-row items-center justify-center" onclick={() => {$statsDisplay = id; $menuVisible = false}}>
 	<div
-		class="bg-cover h-5/6 rounded-2xl w-3/5 ml-4 {splashPosition[champion]
+		class="ml-4 h-5/6 w-3/5 rounded-2xl bg-cover {splashPosition[champion]
 			? splashPosition[champion]
 			: 'bg-center'} h-1/5 bg-no-repeat"
 		style="background-image : {cardBackground(urlSplash, win)}"
 	></div>
-	<div class="h-full w-2/5 mt-4 items-center flex flex-col justify-center text-white">
+	<div class="mt-4 flex h-full w-2/5 flex-col items-center justify-center text-white">
 		<p>{kills}/{deaths}/{assists}</p>
 		<p>{cs} cs</p>
 		<p>{csMIN} cs/min</p>

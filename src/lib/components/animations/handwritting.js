@@ -1,4 +1,4 @@
-export function handwriting(node, { speed = 1 }) {
+export function handwritting(node, { speed = 1 }) {
 	const valid = node.childNodes.length === 1 && node.childNodes[0].nodeType === Node.TEXT_NODE;
 
 	if (!valid) {

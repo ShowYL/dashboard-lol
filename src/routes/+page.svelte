@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { handwriting } from '$lib/components/handwritting.js';
+	import { handwritting } from '$lib/components/animations/handwritting.js';
 
 	let { data } = $props();
 
@@ -17,11 +17,11 @@
 	let erreur = $state('');
 
 	$effect(() => {
-		if (researchClicked){
-			input?.focus()
-			input?.select()
-		}else{
-			erreur = ''
+		if (researchClicked) {
+			input?.focus();
+			input?.select();
+		} else {
+			erreur = '';
 		}
 	});
 
@@ -101,7 +101,7 @@
 </script>
 
 <div
-	class="flex h-full w-full items-center justify-center bg-cover bg-center bg-no-repeat flex-col"
+	class="flex h-full w-full flex-col items-center justify-center bg-cover bg-center bg-no-repeat"
 	style="background-image: {backgroundImage};"
 >
 	<div class="mx-auto mb-16 mt-auto flex h-1/5 w-2/5 items-center justify-center text-slate-400">
@@ -115,7 +115,7 @@
 			>
 				{#if showText}
 					<span
-						in:handwriting|global={{ speed: 1.2 }}
+						in:handwritting|global={{ speed: 1.2 }}
 						onintroend={() => (textDisplayed = true)}
 					>
 						Hide on bush#GOAT
@@ -213,7 +213,12 @@
 			</div>
 		{/if}
 	</div>
-	<div class="text-slate-700 text-xs">
-		<p>Dashboard LoL is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games and all associated properties are trademarks or registered trademarks of Riot Games, Inc</p>
+	<div class="text-xs text-slate-700">
+		<p>
+			Dashboard LoL is not endorsed by Riot Games and does not reflect the views or opinions
+			of Riot Games or anyone officially involved in producing or managing Riot Games
+			properties. Riot Games and all associated properties are trademarks or registered
+			trademarks of Riot Games, Inc
+		</p>
 	</div>
 </div>

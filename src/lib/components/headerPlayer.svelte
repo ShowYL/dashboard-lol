@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { menuVisible } from './shared.js';
+	import { menuVisible,statsDisplay } from './shared.js';
 	import MenuMatches from './MenuMatches.svelte';
 
 	let { matches, summonerName, tag } = $props();
@@ -142,7 +142,7 @@
 
 <div class="flex h-full w-full flex-col items-center bg-slate-900 text-xl text-white md:flex-row">
 	<div class="mt-4 flex h-full w-full flex-row items-center justify-center md:w-1/3">
-		<div class="flex h-full w-3/4 items-center justify-center md:mt-0 md:w-full">
+		<div class="flex h-full w-3/4 items-center justify-center md:mt-0 md:w-full" onclick={() => $statsDisplay = 'overview'}>
 			<h1 class="ml-8 flex items-center space-x-4">
 				<img src={icon} alt="icon of the summoner" class="h-24 w-24 rounded-2xl" />
 				<ul>
